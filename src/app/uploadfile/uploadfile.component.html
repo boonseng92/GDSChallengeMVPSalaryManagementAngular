@@ -1,0 +1,50 @@
+<div *ngIf="currentFile" class="progress">
+  <div
+    class="progress-bar progress-bar-info progress-bar-striped"
+    role="progressbar"
+    attr.aria-valuenow="{{ progress }}"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [ngStyle]="{ width: progress + '%' }"
+  >
+    {{ progress }}%
+  </div>
+</div>
+
+<label class="btn btn-default">
+  <input type="file" (change)="selectFile($event)" />
+</label>
+
+<button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">
+  Upload
+</button>
+
+<div class="alert alert-light" role="alert">{{ message }}</div>
+
+<div class="card">
+  <div class="card-header">List of Employees</div>
+
+  <div class="table-responsive-md">
+    <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="row">ID</th>
+      <th>Name</th>
+      <th>Login</th>
+      <th>Salary</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let employees of fileInfos | async">
+      <td scope="row">{{employees.id}}</td>
+      <td>{{employees.name}}</td>
+      <td>{{employees.login}}</td>
+      <td>$ {{employees.salary}}</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+
+
+
+</div>

@@ -1,0 +1,91 @@
+<h1>Search Employees</h1>
+
+<h5>Search By</h5>
+<form (ngSubmit)="onSubmit($event)" [formGroup]="form"  novalidate>
+
+
+  <div class="form-row">
+    <div class="col-md-6">
+      <div class="md-form form-group">
+        <label for="minSalary">Minimum Salary</label>
+        <input type="number" class="form-control" formControlName="minSalary" id="minSalary" placeholder="Minimum Salary">
+      </div>
+      <div *ngIf="form.controls['minSalary'].invalid && (form.controls['minSalary'].dirty || form.controls['minSalary'].touched)" class="alert alert-danger">
+        <div *ngIf="form.controls['minSalary'].errors.pattern">
+          Minimum Salary is required with 2 decimal places. E.g. 100.11
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="md-form form-group">
+        <label for="maxSalary">Maximum Salary</label>
+        <input type="number" class="form-control" formControlName="maxSalary" id="maxSalary" placeholder="Maximum Salary">
+      </div>
+      <div *ngIf="form.controls['maxSalary'].invalid && (form.controls['maxSalary'].dirty || form.controls['maxSalary'].touched)" class="alert alert-danger">
+        <div *ngIf="form.controls['maxSalary'].errors.pattern">
+          Maximum Salary is required with 2 decimal places. E.g. 100.11
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6">
+      <div class="md-form form-group">
+        <label for="sortbycolumn">Sort By</label>
+        <input type="text" class="form-control" formControlName="sortbycolumn" id="sortbycolumn" placeholder="Sort By">
+      </div>
+      <div *ngIf="form.controls['sortbycolumn'].invalid && (form.controls['sortbycolumn'].dirty || form.controls['sortbycolumn'].touched)" class="alert alert-danger">
+        <div *ngIf="form.controls['sortbycolumn'].errors.required">
+          Sort By cannot be empty.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="md-form form-group">
+        <label for="sortbyorder">Order By</label>
+        <select  class="browser-default custom-select" id="sortbyorder" formControlName="sortbyorder" class="form-control" >
+          <option value="">Select Order</option>
+          <option value="+">Ascending</option>
+          <option value="-">Descending</option>
+        </select>
+      </div>
+      <div *ngIf="form.controls['sortbyorder'].invalid && (form.controls['sortbyorder'].dirty || form.controls['sortbyorder'].touched)" class="alert alert-danger">
+        <div *ngIf="form.controls['sortbyorder'].errors?.required">
+          Select Sorting Order.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <button type="button" class="btn btn-outline-primary btn-lg" type="submit">Search</button>
+  <br/><p class="jasmine-failed">{{errorMessage}}</p>
+</form>
+
+<div class="table-responsive-md">
+  <table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="row">ID</th>
+    <th>Name</th>
+    <th>Login</th>
+    <th>Salary</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let employees of result">
+    <td scope="row">{{employees.id}}</td>
+    <td>{{employees.name}}</td>
+    <td>{{employees.login}}</td>
+    <td>$ {{employees.salary}}</td>
+  </tr>
+  </tbody>
+</table>
+</div>
+
+
+<button type="button" class="btn btn-outline-primary btn-lg" (click)="onClickPreviousPage()">Previous Page</button>&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button" class="btn btn-outline-primary btn-lg" (click)="onClickNextPage()">Next Page</button>
